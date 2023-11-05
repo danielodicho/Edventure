@@ -36,7 +36,8 @@ button {
 }
 
 button:hover {
-    background-color: #43A047; 
+    background-color: #43A047; /* A darker shade of Toyota red for hover effect */
+}
 
 .goBackBtn {
     position: absolute;

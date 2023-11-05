@@ -27,11 +27,6 @@ function captureImage() {
     sendImage(dataUrl);
 }
 
-function initMap() {
-    // Initialize the Google Map and Places API integration
-    // Make sure to replace 'map' with the actual map container ID
-}
-
 function showScreen(screenId) {
     console.log("showScreen called with:", screenId);
     // Hide all screens
@@ -50,7 +45,7 @@ function showScreen(screenId) {
 
 document.addEventListener('DOMContentLoaded', function() {
     // Set the user's name if necessary
-    document.getElementById('userName').textContent = 'Your Name'; // Replace 'Your Name' as needed
+    document.getElementById('userName').textContent = 'Yejun'; // Replace 'Your Name' as needed
 
     // Handle the "Start Trip" button click
     document.getElementById('startTripBtn').addEventListener('click', function() {
