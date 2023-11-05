@@ -23,7 +23,7 @@ We take immense pride in creating an MVHP (minimal viable hacked product) from t
 Throughout this process, we gained invaluable insights into the practical applications of AI. We learned the intricacies of Flask as a web development tool, the capabilities of OpenAI's API for content generation, and the robustness of Google Cloud's services for real-time data. Our understanding of creating a seamless user experience deepened, and we became adept at Agile methodologies through real-world practice.
 
 ## What's next for Toyota Edventure
-The road ahead for Toyota EduVenture is brimming with potential. While we have established a mode that delivers historical content based on image recognition, we aim to enhance the app with:
+The road ahead for Toyota EdVenture is brimming with potential. While we have established a mode that delivers historical content based on image recognition, we aim to enhance the app with:
 
 * A diverse array of interactive storytelling features that utilize real-time environmental data and passenger input.
 * Expanding our Q&A functionality to be more interactive and comprehensive in its knowledge delivery.
