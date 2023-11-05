@@ -1,0 +1,48 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>EduVenture Trip App</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+        <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+        <script src="{{ url_for('static', filename='script.js') }}"></script> <!-- Link to your CSS file -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=places&v=weekly" async></script>
+    </head>
+    <body>
+
+        <!-- Welcome Screen -->
+        <div id="welcomeScreen" class="screen">
+            <h1>Hi, <span id="userName">Yejun</span>!</h1>
+            <button id="startTripBtn">Start Trip</button>
+        </div>
+
+        <!-- Destination Selection Screen -->
+        <div id="destinationScreen" class="screen not-welcome" style="display: none;">
+            <button class="goBackBtn">&larr; Back</button>
+            <h2>Select Your Destination</h2>
+            <div id="map"></div>
+            <input id="destinationInput" type="text" placeholder="Enter destination">
+            <button id="selectDestinationBtn">Select Destination</button>
+        </div>
+
+        <!-- Travel Modes Screen -->
+        <div id="travelModesScreen" class="screen not-welcome" style="display: none;">
+            <button class="goBackBtn">&larr; Back</button>
+            <h2>Choose Your Travel Mode</h2>
+            <button data-mode="mode1">Adventure 🏔️</button>
+            <button data-mode="mode2">Technology ⚙️</button>
+            <button data-mode="mode3">Architechture 🗽</button>
+            <button data-mode="mode4">History 🏛️</button>
+            <button data-mode="mode5">Science 🧬</button>
+        </div>
+
+        <!-- Camera Screen -->
+        <div id="cameraScreen" class="screen not-welcome" style="display: none;">
+            <button class="goBackBtn">&larr; Back</button>
+            <video id="cameraPreview" width="640" height="480" autoplay></video>
+            <button id="captureBtn">Capture</button>
+        </div>
+
+    </body>
+    </html>
