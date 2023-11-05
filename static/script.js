@@ -97,11 +97,11 @@ document.addEventListener('DOMContentLoaded', function() {
         startCamera();
     });
 
-    document.getElementById('destinationInput').addEventListener('change', function() {
-        console.log("typing destination");
-        showScreen('cameraScreen');
-        //document.getElementById('destinationInput').trigger("geocode");
-    });
+    // document.getElementById('destinationInput').addEventListener('change', function() {
+    //     console.log("typing destination");
+    //     showScreen('cameraScreen');
+    //     //document.getElementById('destinationInput').trigger("geocode");
+    // });
 
 
     document.getElementById('loginBtn').addEventListener('click', function() {

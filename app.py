@@ -1,11 +1,15 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from flask import Flask, request, jsonify, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, Response
 from io import BytesIO
 from PIL import Image
 import base64
 import os
+import cv2
+import numpy as np
+
+
 
 #setting up the database
 app = Flask(__name__)
@@ -23,6 +27,55 @@ class User(db.Model):
 
 admin = Admin(app, name='Edventure Admin', template_mode='bootstrap3')
 admin.add_view(ModelView(User, db.session))
+# Load the model
+net = cv2.dnn.readNetFromCaffe('/Users/neelshettigar/Downloads/Edventure/opencv/deploy.prototxt', '/Users/neelshettigar/Downloads/Edventure/opencv/mobilenet_iter_73000.caffemodel')
+
+# Define the class labels MobileNet SSD was trained on
+classNames = {
+    0: 'background', 1: 'aeroplane', 2: 'bicycle', 3: 'bird', 4: 'boat',
+    5: 'bottle', 6: 'bus', 7: 'car', 8: 'cat', 9: 'chair',
+    10: 'cow', 11: 'diningtable', 12: 'dog', 13: 'horse',
+    14: 'motorbike', 15: 'person', 16: 'pottedplant',
+    17: 'sheep', 18: 'sofa', 19: 'train', 20: 'tvmonitor'
+}
+
+def gen_frames():
+    # Initialize video feed from webcam
+    cap = cv2.VideoCapture(0)
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+        else:
+            blob = cv2.dnn.blobFromImage(frame, 0.007843, (300, 300), 127.5)
+            net.setInput(blob)
+            detections = net.forward()
+
+            # Loop over the detections
+            for i in range(detections.shape[2]):
+                confidence = detections[0, 0, i, 2]
+                if confidence > 0.2:
+                    class_id = int(detections[0, 0, i, 1])
+                    class_name = classNames[class_id]
+                    box_x = int(detections[0, 0, i, 3] * frame.shape[1])
+                    box_y = int(detections[0, 0, i, 4] * frame.shape[0])
+                    box_width = int(detections[0, 0, i, 5] * frame.shape[1])
+                    box_height = int(detections[0, 0, i, 6] * frame.shape[0])
+                    cv2.rectangle(frame, (box_x, box_y), (box_width, box_height), (23, 230, 210), thickness=2)
+                    cv2.putText(frame, class_name, (box_x, box_y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (23, 230, 210), 2)
+
+            ret, buffer = cv2.imencode('.jpg', frame)
+            frame = buffer.tobytes()
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # Concatenate frame one by one and show result
+
+    # When everything done, release the capture
+    cap.release()
+    cv2.destroyAllWindows()
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 @app.route('/')
