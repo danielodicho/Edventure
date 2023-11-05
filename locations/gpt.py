@@ -5,7 +5,7 @@ openai.api_key = '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'
 
 def get_response(context, prompt):
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4",
         messages=[
             {"role": "system", "content": context},
             {"role": "user", "content": prompt}
