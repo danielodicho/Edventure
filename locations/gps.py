@@ -1,6 +1,6 @@
 import requests
 
-google_api_key = 'AIzaSyD2iA0S2ck8uFD-4NqplKRuku4XG7lEYkQ'
+google_api_key = 'placeholder'
 
 def get_location():
     """Get the geolocation information."""
