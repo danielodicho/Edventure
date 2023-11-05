@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduVenture Camera App</title>
+<script>
+
+function sendImage(dataUrl) {
+    fetch('/upload', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ image: dataUrl })
+    }).then(response => response.json()).then(data => {
+        console.log(data);
+        // Process the response data here
+    }).catch(error => {
+        console.error(error);
+    });
+}
+
+function startCamera() {
+    const video = document.getElementById('cameraPreview');
+    if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                video.srcObject = stream;
+            })
+            .catch(function(error) {
+                console.log("Something went wrong!");
+            });
+    }
+}
+
+function takePicture() {
+    const canvas = document.createElement('canvas');
+    const video = document.getElementById('cameraPreview');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext('2d').drawImage(video, 0, 0);
+    
+    // Convert the canvas image to a data URL and send it
+    const dataUrl = canvas.toDataURL('image/png');
+    sendImage(dataUrl);
+}
+</script>
+</head>
+<body onload="startCamera();">
+
+<h1>Toyota EduVenture Camera App</h1>
+
+<video id="cameraPreview" width="640" height="480" autoplay></video>
+<button onclick="takePicture()">Take Picture</button>
+
+</body>
+</html>
