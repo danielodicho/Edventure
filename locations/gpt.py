@@ -1,7 +1,7 @@
 from gps import *
 import openai
 
-openai.api_key = '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'
+openai.api_key = ''
 
 def get_response(context, prompt):
     response = openai.ChatCompletion.create(
