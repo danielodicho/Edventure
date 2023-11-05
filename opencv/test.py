@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 # Load the model
-net = cv2.dnn.readNetFromCaffe('C:/Users/danie/PycharmProjects/pythonProject2/Edventure/opencv/deploy.prototxt', 'C:/Users/danie/PycharmProjects/pythonProject2/Edventure/opencv/mobilenet_iter_73000.caffemodel')
+net = cv2.dnn.readNetFromCaffe('/Users/neelshettigar/Downloads/Edventure/opencv/deploy.prototxt', '/Users/neelshettigar/Downloads/Edventure/opencv/mobilenet_iter_73000.caffemodel')
 
 # Initialize video feed from webcam
 cap = cv2.VideoCapture(0)
