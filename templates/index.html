@@ -1,58 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EduVenture Camera App</title>
-<script>
-
-function sendImage(dataUrl) {
-    fetch('/upload', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ image: dataUrl })
-    }).then(response => response.json()).then(data => {
-        console.log(data);
-        // Process the response data here
-    }).catch(error => {
-        console.error(error);
-    });
-}
-
-function startCamera() {
-    const video = document.getElementById('cameraPreview');
-    if (navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function(stream) {
-                video.srcObject = stream;
-            })
-            .catch(function(error) {
-                console.log("Something went wrong!");
-            });
-    }
-}
-
-function takePicture() {
-    const canvas = document.createElement('canvas');
-    const video = document.getElementById('cameraPreview');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    canvas.getContext('2d').drawImage(video, 0, 0);
-    
-    // Convert the canvas image to a data URL and send it
-    const dataUrl = canvas.toDataURL('image/png');
-    sendImage(dataUrl);
-}
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduVenture Trip App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <script src="{{ url_for('static', filename='script.js') }}"></script> <!-- Link to your CSS file -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=places&v=weekly" async></script>
 </head>
-<body onload="startCamera();">
+<body>
 
-<h1>Toyota EduVenture Camera App</h1>
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen" class="screen">
+        <h1>Hi, <span id="userName">[name]</span>!</h1>
+        <button id="startTripBtn">Start Trip</button>
+    </div>
 
-<video id="cameraPreview" width="640" height="480" autoplay></video>
-<button onclick="takePicture()">Take Picture</button>
+    <!-- Destination Selection Screen -->
+    <div id="destinationScreen" class="screen" style="display: none;">
+        <button class="goBackBtn">&larr; Go Back</button>
+        <h2>Select Your Destination</h2>
+        <div id="map"></div>
+        <input id="destinationInput" type="text" placeholder="Enter destination">
+        <button id="selectDestinationBtn">Select Destination</button>
+    </div>
+
+    <!-- Travel Modes Screen -->
+    <div id="travelModesScreen" class="screen" style="display: none;">
+        <button class="goBackBtn">&larr; Go Back</button>
+        <h2>Choose Your Travel Mode</h2>
+        <button data-mode="mode1">Mode 1</button>
+        <button data-mode="mode2">Mode 2</button>
+        <button data-mode="mode3">Mode 3</button>
+        <button data-mode="mode4">Mode 4</button>
+        <button data-mode="mode5">Mode 5</button>
+    </div>
+
+    <!-- Camera Screen -->
+    <div id="cameraScreen" class="screen" style="display: none;">
+        <button class="goBackBtn">&larr; Go Back</button>
+        <video id="cameraPreview" width="640" height="480" autoplay></video>
+        <button id="captureBtn">Capture</button>
+    </div>
 
 </body>
 </html>
