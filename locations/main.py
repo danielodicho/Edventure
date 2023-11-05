@@ -1,5 +1,6 @@
 from gpt import *
 from time import sleep
+from Edventure.voice.tts import tts_speak
 
 def output_story(city):
     # Get cool things to do in the city from OpenAI's GPT
@@ -35,8 +36,9 @@ def output_story(city):
 
 
     places = get_response(history_mode_context, history_prompt)
+    return places
     # places = get_places()
-    print(places)
+    # print(places)
 
 city = True
 prev_city = None
@@ -45,6 +47,12 @@ while True:
     lat, lng = location['lat'], location['lng']
     city = get_city(lat, lng)
     if city != prev_city:
-        output_story(city)
+        print("getting story")
+        story = output_story(city)
+        print(len(story), "got it")
+        tts_speak(story)
+
     sleep(30000)
     prev_city = city
+# print("hello")
+# tts_speak("hello")

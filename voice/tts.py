@@ -2,6 +2,7 @@ from google.cloud import texttospeech
 from google.oauth2 import service_account
 import subprocess
 import json
+import os
 
 # Replace 'path_to_your_service_account.json' with your actual service account file path
 credentials = service_account.Credentials.from_service_account_info({
@@ -20,6 +21,7 @@ credentials = service_account.Credentials.from_service_account_info({
 
 def tts_speak(text):
     # Creates a client
+    print("this got called")
     client = texttospeech.TextToSpeechClient(credentials=credentials)
 
     # Set the text input to be synthesized
@@ -48,4 +50,5 @@ def tts_speak(text):
         out.write(response.audio_content)
         print('Audio content written to file "output.mp3"')
 
-    subprocess.call(["afplay", "output.mp3"])
+    # subprocess.call(["afplay", "output.mp3"]) # for macOS
+    os.startfile("output.mp3") # for Windows
