@@ -3,46 +3,86 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>EduVenture Trip App</title>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <title>EdVenture Trip App</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}?v=1">
+        <link rel="apple-touch-icon" sizes="128x128" href="edventure_app_logo.png">
         <link href="https://cdn.tailwindcss.com" rel="stylesheet">
         <script src="{{ url_for('static', filename='script.js') }}"></script> <!-- Link to your CSS file -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=places&v=weekly" async></script>
     </head>
     <body>
+        <!-- Login Screen -->
+        <div id="loginScreen" class="screen">
+            <h2>EdVenture</h2>
+            <div id="map"></div>
+            <input id="email" type="text" placeholder="Email">
+            <input id="password" type="password" placeholder="Password">
+
+            <div class="buttons-container">
+                <button2 id="loginBtn" style="font-weight: bold;">Login</button2>
+                <button2 id="signupBtn" style="font-weight: bold;">Sign Up</button2>
+            </div>
+        </div>
 
         <!-- Welcome Screen -->
-        <div id="welcomeScreen" class="screen">
-            <h1>Hi, <span id="userName">Yejun</span>!</h1>
-            <button id="startTripBtn">Start Trip</button>
-        </div>
+        <div id="welcomeScreen" class="screen not-welcome" style="display: none;">
+            <h1>EdVenture</h1>
 
-        <!-- Destination Selection Screen -->
-        <div id="destinationScreen" class="screen not-welcome" style="display: none;">
-            <button class="goBackBtn">&larr; Back</button>
-            <h2>Select Your Destination</h2>
+            <button class="goBackBtn">
+                <span class="backArrow">&#x2190;</span> <!-- This is the unicode for a left-pointing arrow -->
+            </button>
+
+
             <div id="map"></div>
-            <input id="destinationInput" type="text" placeholder="Enter destination">
-            <button id="selectDestinationBtn">Select Destination</button>
-        </div>
+            <input id="destinationInput" type="text" placeholder="Enter a destination">
+{#            <button id="selectDestinationBtn">Select Destination</button>#}
 
-        <!-- Travel Modes Screen -->
-        <div id="travelModesScreen" class="screen not-welcome" style="display: none;">
-            <button class="goBackBtn">&larr; Back</button>
-            <h2>Choose Your Travel Mode</h2>
-            <button data-mode="mode1">Adventure 🏔️</button>
-            <button data-mode="mode2">Technology ⚙️</button>
-            <button data-mode="mode3">Architechture 🗽</button>
-            <button data-mode="mode4">History 🏛️</button>
-            <button data-mode="mode5">Science 🧬</button>
+            <button class="goBackBtn">
+                <span class="backArrow">&#x2190;</span> <!-- This is the unicode for a left-pointing arrow -->
+            </button>
+
+            <h3>Choose Your Travel Mode</h3>
+{#            <button data-mode="mode1">Adventure 🏔️</button>#}
+{#            <button data-mode="mode2">Technology ⚙️</button>#}
+{#            <button data-mode="mode3">Architechture 🗽</button>#}
+{#            <button data-mode="mode4">History 🏛️</button>#}
+{#            <button data-mode="mode5">Science 🧬</button>#}
+
+            <ul class="travel-mode-list">
+                <li class="travel-mode-item" data-mode="Adventure">
+                    <span class="emoji" role="img" aria-label="Adventure">🏔️</span>
+                    <span>Adventure</span>
+                </li>
+                <li class="travel-mode-item" data-mode="Technology">
+                    <span class="emoji" role="img" aria-label="Technology">📱</span>
+                    <span>Technology</span>
+                </li>
+                <li class="travel-mode-item" data-mode="Architecture">
+                    <span class="emoji" role="img" aria-label="Architecture">🏛️</span>
+                    <span>Architecture</span>
+                </li>
+                <li class="travel-mode-item" data-mode="Historical">
+                    <span class="emoji" role="img" aria-label="Historical">🕰️</span>
+                    <span>Historical</span>
+                </li>
+                <li class="travel-mode-item" data-mode="Science">
+                    <span class="emoji" role="img" aria-label="Science">🧬</span>
+                    <span>Science</span>
+                </li>
+            </ul>
+
+            <button id="startTripBtn" style="margin-top: 60px; font-weight: bold;">Start Trip</button>
+
         </div>
 
         <!-- Camera Screen -->
         <div id="cameraScreen" class="screen not-welcome" style="display: none;">
-            <button class="goBackBtn">&larr; Back</button>
-            <video id="cameraPreview" width="640" height="480" autoplay></video>
-            <button id="captureBtn">Capture</button>
+            <video id="cameraPreview" width="720" height="1280" autoplay></video>
+            <button id="captureBtn" style="font-weight: bold;">End Trip</button>
         </div>
-
+{#        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2iA0S2ck8uFD-4NqplKRuku4XG7lEYkQ&libraries=places&callback=initAutocomplete"></script>#}
+        <script src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+        <script src="jquery.geocomplete.js"></script>
     </body>
     </html>

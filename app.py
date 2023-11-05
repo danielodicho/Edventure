@@ -1,10 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from flask import Flask, request, jsonify, render_template
-import base64
+from flask import Flask, request, jsonify, render_template, jsonify
 from io import BytesIO
 from PIL import Image
+import base64
+import os
 
 #setting up the database
 app = Flask(__name__)
@@ -53,6 +54,23 @@ def upload_image():
     # TODO: Process the image here
 
     return jsonify({'result': 'Image processed successfully'}), 200
+
+
+@app.route('/save-image', methods=['POST'])
+def save_image():
+    data = request.json['image']
+    # Remove the header from the data URL
+    header, encoded = data.split(",", 1)
+    # Decode the base64 string
+    data = base64.b64decode(encoded)
+
+    # Create an image from the bytes and save it
+    with Image.open(BytesIO(data)) as img:
+        # Specify the directory and filename to save the image
+        file_path = os.path.join('opencv', 'captured_image.png')
+        img.save(file_path, 'PNG')
+
+    return jsonify({'message': 'Image saved successfully'}), 200
 
 # Create the database and tables
 with app.app_context():
